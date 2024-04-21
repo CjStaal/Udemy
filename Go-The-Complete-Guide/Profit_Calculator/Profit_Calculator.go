@@ -12,29 +12,27 @@ import (
 )
 
 func main() {
+	revenue := getInputFloat64("Revenue: ")
+	expenses := getInputFloat64("Expenses: ")
+	taxRate := getInputFloat64("Tax Rate: ")
 
-	var revenue, expenses, taxRate float64
+	ebt, profit, ratio := calculateProfits(revenue, expenses, taxRate)
 
-	fmt.Print("Revenue: ")
-	fmt.Scan(&revenue)
+	fmt.Printf("Profit Before Tax: %.2f\n", ebt)
+	fmt.Printf("Profit After Tax: %.2f\n", profit)
+	fmt.Printf("Profit Ratio: %.2f\n", ratio)
+}
 
-	fmt.Print("Expenses: ")
-	fmt.Scan(&expenses)
+func getInputFloat64(message string) (returnValue float64) {
+	fmt.Print(message)
+	fmt.Scan(&returnValue)
 
-	fmt.Print("Tax Rate: ")
-	fmt.Scan(&taxRate)
+	return returnValue
+}
 
-	ebt := revenue - expenses
-	profit := ebt * (1 - (taxRate / 100))
-	ratio := ebt / profit
-
-	fmt.Print("Profit Before Tax: ")
-	fmt.Println(ebt)
-
-	fmt.Print("Profit After Tax: ")
-	fmt.Println(profit)
-
-	fmt.Print("Profit Ratio: ")
-	fmt.Println(ratio)
-
+func calculateProfits(rev, exp, tr float64) (ebt float64, pft float64, rt float64) {
+	ebt = rev - exp
+	pft = ebt * (1 - (tr / 100))
+	rt = ebt / pft
+	return ebt, pft, rt
 }
